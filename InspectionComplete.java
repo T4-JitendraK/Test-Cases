@@ -1,11 +1,16 @@
 package automationFramework;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -610,43 +615,147 @@ driver.close();
       		System.out.println("Visit Sub status dropdown value is disabled or not present");
       		driver.close();
       	}
+      	 // for problem category by engineer dropdown icon
+     	 try {
+      		driver.findElement(By.xpath("//app-select[2]/mat-form-field/div/div/div[3]/mat-select/div/div[2]")).click();
+      	}
 
-          // for problem category by engineer dropdown icon
-      	 try {
-       		driver.findElement(By.xpath("//app-select[2]/mat-form-field/div/div/div[3]/mat-select/div/div[2]")).click();
-       	}
+      	catch (Exception e)
+      	{
+      		System.out.println("Problem category dropdown  is disabled or not present");
+      		driver.close();
+      	}
 
-       	catch (Exception e)
-       	{
-       		System.out.println("Problem category dropdown  is disabled or not present");
-       		driver.close();
-       	}
-       	try {
-       		driver.findElement(By.xpath("//span[contains(.,'Auto Restart')]")).click();
-       		Thread.sleep(5000);
-       	}
+     	 
+      	try {
+            WebElement select1 = driver.findElement(By.xpath("//span[contains(.,'Auto Restart')]"));
+            WebElement select2 = driver.findElement(By.xpath("//span[contains(.,'Tripping')]"));
 
-       	catch (Exception e)
-       	{
-       		System.out.println("Problem category dropdown  value 1is disabled or not present");
-       		driver.close();
-       	}
+            Actions action = new Actions(driver);
+            action.keyDown(Keys.CONTROL).click(select1).click(select2).build().perform();	
+            Thread.sleep(5000);
+      	}
+           
+      	catch (Exception e)
+      	{
+      		System.out.println("error");
+      		driver.close();
+      	}
+      	try { 
+      		Robot r = new Robot(); r.keyPress(KeyEvent.VK_ESCAPE); 
+      			r.keyRelease(KeyEvent.VK_ESCAPE);
+      		} catch (Exception e) { 
 
-       	try {
-       		driver.findElement(By.xpath("//span[contains(.,'Tripping')]")).click();
-       		Thread.sleep(5000);
-       		driver.findElement(By.xpath("//*[@id=\"repair_details___fields\"]/app-input[2]/mat-form-field/div")).click();
-       		Thread.sleep(5000);
-       		
-       	}
+          		System.out.println("Escape error");
+      		}
+     // for Defect Type
+    	 try {
+     		driver.findElement(By.xpath("//app-select[3]/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
+     	}
 
-       	catch (Exception e)
-       	{
-       		System.out.println("Problem category dropdown value 2 is disabled or not present");
-       		driver.close();
-       	}
+     	catch (Exception e)
+     	{
+     		System.out.println("Defect Type dropdown  is disabled or not present");
+     		driver.close();
+     	}
 
+    	 
+     	try {
 
-driver.close();    
+     		driver.findElement(By.xpath("//span[contains(.,'Non Manufacturing Defect')]")).click();	
+           Thread.sleep(5000);
+     	}
+          
+     	catch (Exception e)
+     	{
+     		System.out.println("Defect Type Dropdown value is not present");
+     		driver.close();
+     	}
+     	
+      	 // for problem Sub category by engineer dropdown icon
+    	 try {
+     		driver.findElement(By.xpath("//app-select[4]/mat-form-field/div/div/div[3]/mat-select/div/div[2]")).click();
+     	}
+
+     	catch (Exception e)
+     	{
+     		System.out.println("Problem Sub category dropdown  is disabled or not present");
+     		driver.close();
+     	}
+
+    	 
+     	try {
+           WebElement select7 = driver.findElement(By.xpath("//span[contains(.,'SMPS faulty')]"));
+           WebElement select8 = driver.findElement(By.xpath("//span[contains(.,'Capacitor Faulty')]"));
+
+           Actions action = new Actions(driver);
+           action.keyDown(Keys.CONTROL).click(select7).click(select8).build().perform();	
+           Thread.sleep(5000);
+     	}
+          
+     	catch (Exception e)
+     	{
+     		System.out.println("Problem Sub category values not found");
+     		driver.close();
+     	}
+     	try { 
+     		Robot r = new Robot(); r.keyPress(KeyEvent.VK_ESCAPE); 
+     			r.keyRelease(KeyEvent.VK_ESCAPE);
+     		} catch (Exception e) { 
+
+         		System.out.println("Escape error");
+     		}
+     	
+     // for Part Selection dropdown icon
+   	 try {
+    		driver.findElement(By.xpath("//app-select[5]/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
+    	}
+
+    	catch (Exception e)
+    	{
+    		System.out.println("Part Selection dropdown  is disabled or not present");
+    		driver.close();
+    	}
+
+   	 
+    	try {
+    		
+    		
+    		
+           driver.findElement(By.cssSelector("#mat-option-40 > .mat-option-text")).click();
+          driver.findElement(By.cssSelector("#mat-option-41 > .mat-option-text")).click();
+                                               	
+          Thread.sleep(5000);
+    	}
+         
+    	catch (Exception e)
+    	{
+    		System.out.println("Parts not found");
+    		driver.close();
+    	}
+    	try { 
+    		Robot r = new Robot(); r.keyPress(KeyEvent.VK_ESCAPE); 
+    			r.keyRelease(KeyEvent.VK_ESCAPE);
+    		} catch (Exception e) { 
+
+        		System.out.println("Escape error");
+    		}
+    	 // for remarks
+   	 try {
+   		//driver.findElement(By.id("mat-input-6")).click();
+   		//driver.findElement(By.id("mat-input-6")).clear();
+   		driver.findElement(By.xpath("//textarea[@id='mat-input-6']")).sendKeys("test data");
+   		 
+    	}
+
+    	catch (Exception e)
+    	{
+    		System.out.println("Remarks field is not present");
+    		driver.close();
+    	}
+
+   	 
+
+      	
  }
 }
