@@ -22,7 +22,7 @@ public class InspectionComplete {
  String driverPath = "D:\\jitendra\\Selenium drivers\\latestchromedriver\\chromedriver.exe";
  public String  baseUrl;
  
- /*
+ 
  
  
  @Test (priority=1)
@@ -89,7 +89,7 @@ public class InspectionComplete {
           	driver.close();
           }
           try {
-          	driver.findElement(By.xpath("//tr[6]/td[1]/div")).click();
+          	driver.findElement(By.xpath("//td[5]/div")).click();
           	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
           }
 
@@ -555,7 +555,7 @@ driver.close();
  
  
  
- */
+ 
  @Test (priority=2)
  public void InvalidInspection() {
  	 System.setProperty("webdriver.chrome.driver", driverPath);
@@ -615,6 +615,24 @@ driver.close();
       		System.out.println("Visit Sub status dropdown value is disabled or not present");
       		driver.close();
       	}
+      	//for remarks
+     	     	try {	 
+     				driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-textarea/mat-form-field/div/div/div[3]/textarea")).clear();
+     	    Thread.sleep(5000);
+     	    driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-textarea/mat-form-field/div/div/div[3]/textarea")).sendKeys("this is a dummy text");
+     		
+      	}
+
+      	catch (Exception e)
+      	{
+      		System.out.println("Remarks field is not present");
+      		driver.close();
+      	}
+
+      	
+      	
+      	
+      	
       	 // for problem category by engineer dropdown icon
      	 try {
       		driver.findElement(By.xpath("//app-select[2]/mat-form-field/div/div/div[3]/mat-select/div/div[2]")).click();
@@ -708,6 +726,7 @@ driver.close();
      	
      // for Part Selection dropdown icon
    	 try {
+   		 Thread.sleep(5000);
     		driver.findElement(By.xpath("//app-select[5]/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
     	}
 
@@ -736,26 +755,952 @@ driver.close();
     	try { 
     		Robot r = new Robot(); r.keyPress(KeyEvent.VK_ESCAPE); 
     			r.keyRelease(KeyEvent.VK_ESCAPE);
+    			
+    			Thread.sleep(5000);
     		} catch (Exception e) { 
 
         		System.out.println("Escape error");
     		}
-    	 // for remarks
-   	 try {
-   		//driver.findElement(By.id("mat-input-6")).click();
-   		//driver.findElement(By.id("mat-input-6")).clear();
-   		driver.findElement(By.xpath("//textarea[@id='mat-input-6']")).sendKeys("test data");
-   		 
-    	}
+    	
+  // Defect Type photo 
+  	try {
+  		
+  		
+  		try {
+  		WebElement element = driver.findElement(By.xpath("//app-file/div/button/span"));
 
-    	catch (Exception e)
-    	{
-    		System.out.println("Remarks field is not present");
-    		driver.close();
-    	}
+  		Actions actions = new Actions(driver);
 
-   	 
+  		actions.moveToElement(element);
 
+  		actions.perform();
+  		}
+  		catch (Exception e)
+      	{
+      		System.out.println("Scroll upto Defect Upload Button is not working");
+      		driver.close();
+      	}
       	
+  		
+  		
+  		driver.findElement(By.xpath("//app-file/div/button/span")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Defect Upload Button is disabled or not Present in Defect Photos");
+  		driver.close();
+  	}
+  	//Pop Up Operations form invalid file upload
+  	try {
+  		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+          driver.switchTo().activeElement();
+  	
+        try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+        Thread.sleep(5000);
+        }
+
+     	catch (Exception e)
+     	{
+     		System.out.println("Photo could not be uploaded in Defect Photos");
+  	}
+        WebDriverWait wait = new WebDriverWait(driver, 120);
+        String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+		
+		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+         {
+        	 
+        	 System.out.println(Successmsg);
+
+			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+         }
+		  else {
+			  System.out.println("Test Failed as invalid file got uploaded in Defect Photos");
+
+		  }
+
+        
+        
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Could not switch to upload pop up in Defect Photos");
+  		//driver.close();
+  	
+  	
+  	}
+  	
+  	//Pop Up Operations form valid file one upload in Defect Photos
+  	try {
+  		driver.findElement(By.xpath("//app-file/div/button/span")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Defect Upload Button is disabled or not Present in Defect Photos");
+  		driver.close();
+
+  	}
+  	
+  	try {
+  		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+          driver.switchTo().activeElement();
+          Thread.sleep(5000);
+  	// First photo
+        try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+        Thread.sleep(5000);
+          String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+          System.out.println("file path after upload is: "+ a);
+			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+        }
+     	catch (Exception e)
+     	{
+     		System.out.println("1st Photo could not be uploaded in Defect Photos");
+  	} 
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Could not switch to upload pop up in Defect Photos");
+  		//driver.close();
+  	
+  	
+  	}
+
+  	
+  	//Pop Up Operations form valid file two upload in Defect Photos
+  	try {
+  		driver.findElement(By.xpath("//app-file/div/button/span")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Defect Upload Button is disabled or not Present");
+  		driver.close();
+
+  	}
+  	
+  	try {
+  		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+          driver.switchTo().activeElement();
+          Thread.sleep(5000);
+  	// First photo
+        try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\SampleJPGImage_50kbmb.jpg");
+        Thread.sleep(5000);
+          String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+          System.out.println("file path after upload is: "+ a);
+			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+        }
+     	catch (Exception e)
+     	{
+     		System.out.println("2nd Photo could not be uploaded in Defect Photos");
+  	} 
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Could not switch to upload pop up in Defect Photos");
+  		//driver.close();
+  	}
+  	
+  
+  	
+//Photo deletion operation in Defect Photos
+  	
+  	try {
+  		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file/div/button[2]")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("View Files Button is disabled or not Present in Defect Photos");
+  		driver.close();
+
+  	}
+  	try {
+  		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Delete Button is disabled or not Present in Defect Photos");
+  		driver.close();
+
+  	}
+
+  	try {
+  		String b= driver.switchTo().alert().getText();
+  		System.out.println(b);
+  		driver.switchTo().alert().dismiss();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Cancel Button is disabled or not Present in Defect Photos");
+  		driver.close();
+
+  	}
+  	try {
+  		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Delete Button is disabled or not Present in Defect Photos");
+  		driver.close();
+
+  	}
+
+  	try {
+  		String c= driver.switchTo().alert().getText();
+  		System.out.println(c);
+  		driver.switchTo().alert().accept();
+  		Thread.sleep(2000);
+
+			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("OK Button is disabled or not Present in Defect Photos");
+  		driver.close();
+
+  	}
+//Photo upload cancel button in Defect Photos
+  	try {
+  		driver.findElement(By.xpath("//app-file/div/button/span")).click();
+  	}
+
+  	catch (Exception e)
+  	{
+  		System.out.println("Defect Upload Button is disabled or not Present i Defect Photos");
+  		driver.close();
+
+  	}
+  	
+  	try {
+  		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+          driver.switchTo().activeElement();
+          Thread.sleep(5000);
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Photo upload pop up not found in Defect Photos");
+  		driver.close();
+
+  	}
+  	try {
+  		driver.findElement(By.xpath("//span[contains(.,'Cancel')]")).click();
+ 	}
+ 	catch (Exception e)
+ 	{
+ 		System.out.println("Cancel button not found in Defect Photos");
+ 		driver.close();
+
+ 	}
+  	
+  	// Claim form doc 
+ 
+	try {
+		   
+   		driver.findElement(By.xpath("//app-file[2]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Claim form Upload Button is disabled or not Present in claim form");
+   		driver.close();
+   	}
+ 	
+ 	
+ 	
+   	//Pop Up Operations form invalid file upload in claim form
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+   	
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+         Thread.sleep(5000);
+         }
+
+      	catch (Exception e)
+      	{
+      		System.out.println("claim Photo could not be uploaded");
+   	}
+         WebDriverWait wait = new WebDriverWait(driver, 120);
+         String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+ 		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+ 		
+ 		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+          {
+         	 
+         	 System.out.println(Successmsg);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+          }
+ 		  else {
+ 			  System.out.println("Test Failed as invalid file got uploaded n claim form");
+
+ 		  }
+
+         
+         
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to claim form upload pop up");
+   		//driver.close();
+   	
+   	
+   	}
+	
+   	//Pop Up Operations form valid file one upload
+   	try {
+   		driver.findElement(By.xpath("//app-file[2]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("claim form  Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	// First photo
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+         Thread.sleep(5000);
+           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+           System.out.println("file path after upload is: "+ a);
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+         }
+      	catch (Exception e)
+      	{
+      		System.out.println("1st Photo could not be uploaded in claim form");
+   	} 
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to claim form upload pop up");
+   		//driver.close();
+   	
+   	
+   	}
+
+   	
+   	//Pop Up Operations form valid file two upload in claim form
+   	try {
+   		driver.findElement(By.xpath("//app-file[2]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("claim form Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	// First photo
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\SampleJPGImage_50kbmb.jpg");
+         Thread.sleep(5000);
+           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+           System.out.println("file path after upload is: "+ a);
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+         }
+      	catch (Exception e)
+      	{
+      		System.out.println("2nd Photo could not be uploaded claim form");
+   	} 
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to claim form upload pop up");
+   		//driver.close();
+   	}
+   	
+   
+   	
+ //Photo deletion operation in claim form
+   	
+   	try {
+   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[2]/div/button[2]/span")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("View Files Button is disabled or not Present in claim form");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Delete Button is disabled or not Present in claim form");
+   		driver.close();
+
+   	}
+
+   	try {
+   		String b= driver.switchTo().alert().getText();
+   		System.out.println(b);
+   		driver.switchTo().alert().dismiss();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Cancel Button is disabled or not Present in claim form");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Delete Button is disabled or not Present in claim form");
+   		driver.close();
+
+   	}
+
+   	try {
+   		String c= driver.switchTo().alert().getText();
+   		System.out.println(c);
+   		driver.switchTo().alert().accept();
+   		Thread.sleep(2000);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("OK Button is disabled or not Present in claim form");
+   		driver.close();
+
+   	}
+ //Photo upload cancel button.
+   	try {
+   		driver.findElement(By.xpath("//app-file[2]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in claim form");
+   		driver.close();
+
+   	}
+   	
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Photo upload pop up not found in claim form");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//span[contains(.,'Cancel')]")).click();
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Cancel button not found in claim form");
+  		driver.close();
+
+  	}
+
+ 	
+ 	
+
+   	
+// Product Number Doc
+ 
+
+ 	try {
+   		
+   		
+   		try {
+   		WebElement element = driver.findElement(By.xpath("//app-file[3]/div/button"));
+
+   		Actions actions = new Actions(driver);
+
+   		actions.moveToElement(element);
+
+   		actions.perform();
+   		}
+   		catch (Exception e)
+       	{
+       		System.out.println("Scroll upto Defect Upload Button is not working");
+       		driver.close();
+       	}
+       	
+   		
+   		
+   		driver.findElement(By.xpath("//app-file[3]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Product Number");
+   		driver.close();
+   	}
+   	//Pop Up Operations form invalid file upload in Product Number
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+   	
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+         Thread.sleep(5000);
+         }
+
+      	catch (Exception e)
+      	{
+      		System.out.println("Product Number Photo could not be uploaded");
+   	}
+         WebDriverWait wait = new WebDriverWait(driver, 120);
+         String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+ 		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+ 		
+ 		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+          {
+         	 
+         	 System.out.println(Successmsg);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+          }
+ 		  else {
+ 			  System.out.println("Test Failed as invalid file got uploaded in Product Number");
+
+ 		  }
+
+         
+         
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to claim form upload pop up in Product Number");
+   		//driver.close();
+   	
+   	
+   	}
+   	
+   	//Pop Up Operations form valid file one upload in Product Number
+   	try {
+   		driver.findElement(By.xpath("//app-file[3]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Product Number form  Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	// First photo
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+         Thread.sleep(5000);
+           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+           System.out.println("file path after upload is: "+ a);
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+         }
+      	catch (Exception e)
+      	{
+      		System.out.println("1st Photo could not be uploaded in Product Number");
+   	} 
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Product Number upload pop up");
+   		//driver.close();
+   	
+   	
+   	}
+
+   	
+   	//Pop Up Operations form valid file two upload in Product Number
+   	try {
+   		driver.findElement(By.xpath("//app-file[3]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Product Number form Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	// second photo in Product Number
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\SampleJPGImage_50kbmb.jpg");
+         Thread.sleep(5000);
+           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+           System.out.println("file path after upload is: "+ a);
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+         }
+      	catch (Exception e)
+      	{
+      		System.out.println("2nd Photo could not be uploaded Product Number");
+   	} 
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Product Number form upload pop up");
+   		//driver.close();
+   	}
+   	
+   
+   	
+ //Photo deletion operation in Product Number
+   	
+   	try {
+   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[3]/div/button[2]/span")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("View Files Button is disabled or not Present in Product Number");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Delete Button is disabled or not Present in Product Number");
+   		driver.close();
+
+   	}
+
+   	try {
+   		String b= driver.switchTo().alert().getText();
+   		System.out.println(b);
+   		driver.switchTo().alert().dismiss();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Cancel Button is disabled or not Present in Product Number");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Delete Button is disabled or not Present in Product Number");
+   		driver.close();
+
+   	}
+
+   	try {
+   		String c= driver.switchTo().alert().getText();
+   		System.out.println(c);
+   		driver.switchTo().alert().accept();
+   		Thread.sleep(2000);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("OK Button is disabled or not Present in Product Number");
+   		driver.close();
+
+   	}
+ //Photo upload cancel button in Product Number
+   	try {
+   		driver.findElement(By.xpath("//app-file[3]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Product Number");
+   		driver.close();
+
+   	}
+   	
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Photo upload pop up not found in Product Number");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//span[contains(.,'Cancel')]")).click();
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Cancel button not found in Product Number");
+  		driver.close();
+
+  	}
+ 	// Job Sheet Doc
+ 
+    
+ 	try {
+   		
+   		
+   		try {
+   		WebElement element = driver.findElement(By.xpath("//app-file[5]/div/button"));
+
+   		Actions actions = new Actions(driver);
+
+   		actions.moveToElement(element);
+
+   		actions.perform();
+   		}
+   		catch (Exception e)
+       	{
+       		System.out.println("Scroll upto Defect Upload Button is not working");
+       		driver.close();
+       	}
+       	
+   		
+   		
+   		driver.findElement(By.xpath("//app-file[5]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Job Sheet");
+   		driver.close();
+   	}
+   	//Pop Up Operations form invalid file upload in Job Sheet
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+   	
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+         Thread.sleep(5000);
+         }
+
+      	catch (Exception e)
+      	{
+      		System.out.println("Job Sheet Photo could not be uploaded");
+   	}
+         WebDriverWait wait = new WebDriverWait(driver, 120);
+         String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+ 		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+ 		
+ 		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+          {
+         	 
+         	 System.out.println(Successmsg);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+          }
+ 		  else {
+ 			  System.out.println("Test Failed as invalid file got uploaded in Job Sheet");
+
+ 		  }
+
+         
+         
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Job Sheet upload pop up in Product Number");
+   		//driver.close();
+   	
+   	
+   	}
+   	
+   	//Pop Up Operations form valid file one upload in Job Sheet
+   	try {
+   		driver.findElement(By.xpath("//app-file[5]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Job Sheet form  Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	// First photo
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+         Thread.sleep(5000);
+           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+           System.out.println("file path after upload is: "+ a);
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+         }
+      	catch (Exception e)
+      	{
+      		System.out.println("1st Photo could not be uploaded in Job Sheet");
+   	} 
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Job Sheet upload pop up");
+   		//driver.close();
+   	
+   	
+   	}
+
+   	
+   	//Pop Up Operations form valid file two upload in Job Sheet
+   	try {
+   		driver.findElement(By.xpath("//app-file[5]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Job Sheet  Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	// second photo in Job Sheet
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\SampleJPGImage_50kbmb.jpg");
+         Thread.sleep(5000);
+           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+           System.out.println("file path after upload is: "+ a);
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+         }
+      	catch (Exception e)
+      	{
+      		System.out.println("2nd Photo could not be uploaded Job Sheet");
+   	} 
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Job Sheet form upload pop up");
+   		//driver.close();
+   	}
+   	
+   
+   	
+ //Photo deletion operation in Job Sheet
+   	
+   	try {
+   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[5]/div/button[2]/span")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("View Files Button is disabled or not Present in Job Sheet");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Delete Button is disabled or not Present in Job Sheet");
+   		driver.close();
+
+   	}
+
+   	try {
+   		String b= driver.switchTo().alert().getText();
+   		System.out.println(b);
+   		driver.switchTo().alert().dismiss();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Cancel Button is disabled or not Present in Job Sheet");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Delete Button is disabled or not Present in Job Sheet");
+   		driver.close();
+
+   	}
+
+   	try {
+   		String c= driver.switchTo().alert().getText();
+   		System.out.println(c);
+   		driver.switchTo().alert().accept();
+   		Thread.sleep(2000);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("OK Button is disabled or not Present in Job Sheet");
+   		driver.close();
+
+   	}
+ //Photo upload cancel button in Job Sheet
+   	try {
+   		driver.findElement(By.xpath("//app-file[5]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Job Sheet");
+   		driver.close();
+
+   	}
+   	
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+           Thread.sleep(5000);
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Photo upload pop up not found in Job Sheet");
+   		driver.close();
+
+   	}
+   	try {
+   		driver.findElement(By.xpath("//span[contains(.,'Cancel')]")).click();
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Cancel button not found in Job Sheet");
+  		driver.close();
+
+  	}
+
+ 	
+  	      	
  }
 }
