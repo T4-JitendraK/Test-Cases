@@ -29,14 +29,15 @@ public class InspectionOnly {
 	 	 System.setProperty("webdriver.chrome.driver", driverPath);
 	 	   driver = new ChromeDriver();
 	 	   driver.manage().window().maximize();
+	 	  driver.manage().deleteAllCookies();
 	 	   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	 	 
-	 driver.get("http://devreassure.innov.co.in/complaints/view/664");
+	 driver.get("https://devreassure.innov.co.in/complaints/view/3");
 	 driver.findElement(By.xpath("//input[@type='text']")).click();
 	 driver.findElement(By.xpath("//input[@type='text']")).clear();
-	 driver.findElement(By.xpath("//input[@type='text']")).sendKeys("san001");
+	 driver.findElement(By.xpath("//input[@type='text']")).sendKeys("IND068");
 	 driver.findElement(By.xpath("//input[@type='password']")).clear();
-	 driver.findElement(By.xpath("//input[@type='password']")).sendKeys("san001");
+	 driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Test@123456");
 	 driver.findElement(By.xpath("//button[@type='submit']")).click();
 
 	          driver.findElement(By.xpath("//span[contains(.,'Add Inspection')]")).click();
@@ -88,7 +89,7 @@ public class InspectionOnly {
 	          	driver.close();
 	          }
 	          try {
-	          	driver.findElement(By.xpath("//td[5]/div")).click();
+	          	driver.findElement(By.xpath("//tr[3]/td[4]/div")).click();
 	          	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
 	          }
 
@@ -416,14 +417,15 @@ public class InspectionOnly {
 	 	 System.setProperty("webdriver.chrome.driver", driverPath);
 	 	   driver = new ChromeDriver();
 	 	   driver.manage().window().maximize();
+	 	  driver.manage().deleteAllCookies();
 	 	   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	 	 
-	 driver.get("http://devreassure.innov.co.in/complaints/view/664");
+	 driver.get("https://devreassure.innov.co.in/complaints/view/3");
 	 driver.findElement(By.xpath("//input[@type='text']")).click();
 	 driver.findElement(By.xpath("//input[@type='text']")).clear();
-	 driver.findElement(By.xpath("//input[@type='text']")).sendKeys("san001");
+	 driver.findElement(By.xpath("//input[@type='text']")).sendKeys("IND068");
 	 driver.findElement(By.xpath("//input[@type='password']")).clear();
-	 driver.findElement(By.xpath("//input[@type='password']")).sendKeys("san001");
+	 driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Test@123456");
 	 driver.findElement(By.xpath("//button[@type='submit']")).click();
 
 	          
@@ -501,8 +503,8 @@ public class InspectionOnly {
 
 	     	 
 	      	try {
-	            WebElement select1 = driver.findElement(By.xpath("//span[contains(.,'Auto Restart')]"));
-	            WebElement select2 = driver.findElement(By.xpath("//span[contains(.,'Tripping')]"));
+	            WebElement select1 = driver.findElement(By.xpath("//mat-option[2]/span"));
+	            WebElement select2 = driver.findElement(By.xpath("//mat-option[3]/span"));
 
 	            Actions action = new Actions(driver);
 	            action.keyDown(Keys.CONTROL).click(select1).click(select2).build().perform();	
@@ -558,8 +560,8 @@ public class InspectionOnly {
 
 	    	 
 	     	try {
-	           WebElement select7 = driver.findElement(By.xpath("//span[contains(.,'SMPS faulty')]"));
-	           WebElement select8 = driver.findElement(By.xpath("//span[contains(.,'Capacitor Faulty')]"));
+	            WebElement select7 = driver.findElement(By.xpath("//mat-option[1]/span"));
+	            WebElement select8 = driver.findElement(By.xpath("//mat-option[3]/span"));
 
 	           Actions action = new Actions(driver);
 	           action.keyDown(Keys.CONTROL).click(select7).click(select8).build().perform();	
@@ -595,9 +597,9 @@ public class InspectionOnly {
 	    	try {
 	    		
 	    		
-	    		
-	           driver.findElement(By.cssSelector("#mat-option-40 > .mat-option-text")).click();
-	          driver.findElement(By.cssSelector("#mat-option-41 > .mat-option-text")).click();
+
+	            driver.findElement(By.xpath("//mat-option[2]/span")).click();
+	           driver.findElement(By.xpath("//mat-option[5]/span")).click();
 	                                               	
 	          Thread.sleep(5000);
 	    	}
@@ -1563,8 +1565,27 @@ public class InspectionOnly {
 	      	System.out.println("Test Failed:Submit button is disabled or not present");
 	      	driver.close();
 	      }
+	 // For success Message
+	    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+	    String TitleW= driver.switchTo().activeElement().getText();
+		System.out.println("Model Box title is:" +TitleW);
+	WebDriverWait wait = new WebDriverWait(driver, 120);
+	String Successmsg = driver.findElement(By.xpath("//p[contains(.,'Inspection has been created successfully.')]")).getText();
+	 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(.,'Inspection has been created successfully.')]")));
+	driver.findElement(By.xpath("//button[@id='modal-action-button']")).click();
+	                             
+	 if (Successmsg.contentEquals("Inspection has been created successfully."))
+	  {
+	 	 
+	 	 System.out.println(Successmsg);
 
-	   	
-	   	driver.close();
+	  }
+	  else {
+		  System.out.println("Inspection success message is incorrect");
+
+	  }
+	 
+	driver.close();
+
 	 }
 }

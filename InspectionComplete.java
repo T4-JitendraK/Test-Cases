@@ -30,14 +30,15 @@ public class InspectionComplete {
  	 System.setProperty("webdriver.chrome.driver", driverPath);
  	   driver = new ChromeDriver();
  	   driver.manage().window().maximize();
+ 	   driver.manage().deleteAllCookies();
  	   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
  	 
- driver.get("http://devreassure.innov.co.in/complaints/view/664");
+ driver.get("https://devreassure.innov.co.in/complaints/view/2");
  driver.findElement(By.xpath("//input[@type='text']")).click();
  driver.findElement(By.xpath("//input[@type='text']")).clear();
- driver.findElement(By.xpath("//input[@type='text']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='text']")).sendKeys("IND068");
  driver.findElement(By.xpath("//input[@type='password']")).clear();
- driver.findElement(By.xpath("//input[@type='password']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Test@123456");
  driver.findElement(By.xpath("//button[@type='submit']")).click();
 
           driver.findElement(By.xpath("//span[contains(.,'Add Inspection')]")).click();
@@ -52,8 +53,30 @@ public class InspectionComplete {
           }
           
           
+      /*    
+       // Server side Validation check for error/blank field 
           
-       // Server side Validation check for error/blank field   
+          driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+          String TitleW= driver.switchTo().activeElement().getText();
+      	//System.out.println("Model Box title is:" +TitleW);
+      WebDriverWait wait = new WebDriverWait(driver, 120);
+      String Successmsg = driver.findElement(By.xpath("//section/ul/li/span[2]")).getText();
+    	System.out.println("Successmsg is:" +Successmsg);
+       wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//section/ul/li/span[2]")));
+      driver.findElement(By.xpath("//footer/button")).click();
+                                   
+       if (Successmsg.contentEquals("Visit can not be empty."))
+        {
+       	 
+       	 System.out.println(Successmsg);
+
+        }
+        else {
+      	  System.out.println("Inspection success message is incorrect");
+
+        }
+
+         */ 
           try {
          	 Thread.sleep(2000);
           	String Msg= driver.findElement(By.xpath("//span[contains(.,'Error : Please fill all required field.')]")).getText();
@@ -79,7 +102,7 @@ public class InspectionComplete {
           }
 
        // Validation check for Visit Completion date      
-          try {
+                 try {
           	driver.findElement(By.cssSelector("mat-datepicker-toggle.ng-tns-c72-36 > button:nth-child(1) > span:nth-child(1) > svg:nth-child(1)")).click();
           }
 
@@ -89,7 +112,7 @@ public class InspectionComplete {
           	driver.close();
           }
           try {
-          	driver.findElement(By.xpath("//td[5]/div")).click();
+          	driver.findElement(By.xpath("//tr[3]/td[4]/div")).click();
           	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
           }
 
@@ -98,7 +121,8 @@ public class InspectionComplete {
           	System.out.println("Invalid date or date is disabled or element not found");
           	driver.close();
           }
-     
+          
+     /*
  //Validation check for visit sub status field
           try {
          	 Thread.sleep(5000);
@@ -125,7 +149,7 @@ public class InspectionComplete {
           	System.out.println("Test Failed:No error Message found");
           	driver.close();
           }
-          
+          */
           try {
         		driver.findElement(By.xpath("//div[8]/mat-expansion-panel/div/div/div[2]/app-select/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
         	}
@@ -450,6 +474,7 @@ public class InspectionComplete {
              }
              // Validation check for Repair Completion date      
              try {
+            	 Thread.sleep(2000);
              	driver.findElement(By.cssSelector("mat-datepicker-toggle.ng-tns-c72-52 > button:nth-child(1) > span:nth-child(1) > svg:nth-child(1)")).click();
              }
 
@@ -459,7 +484,7 @@ public class InspectionComplete {
              	driver.close();
              }
              try {
-             	driver.findElement(By.xpath("//td[5]/div")).click();
+             	driver.findElement(By.xpath("//tr[3]/td[4]/div")).click();
              	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
              }
 
@@ -561,14 +586,15 @@ driver.close();
  	 System.setProperty("webdriver.chrome.driver", driverPath);
  	   driver = new ChromeDriver();
  	   driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
  	   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
  	 
- driver.get("http://devreassure.innov.co.in/complaints/view/664");
+ driver.get("https://devreassure.innov.co.in/complaints/view/2");
  driver.findElement(By.xpath("//input[@type='text']")).click();
  driver.findElement(By.xpath("//input[@type='text']")).clear();
- driver.findElement(By.xpath("//input[@type='text']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='text']")).sendKeys("IND068");
  driver.findElement(By.xpath("//input[@type='password']")).clear();
- driver.findElement(By.xpath("//input[@type='password']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Test@123456");
  driver.findElement(By.xpath("//button[@type='submit']")).click();
 
           
@@ -595,6 +621,29 @@ driver.close();
            	System.out.println("Test Failed:Scroll down failed");
            	driver.close();	
            }
+          // Validation check for Visit Completion date      
+          try {
+   	driver.findElement(By.cssSelector("mat-datepicker-toggle.ng-tns-c72-36 > button:nth-child(1) > span:nth-child(1) > svg:nth-child(1)")).click();
+   }
+
+   catch (Exception e)
+   {
+   	System.out.println("Test Failed:Datepicker icon is disabled or not present");
+   	driver.close();
+   }
+   try {
+   	driver.findElement(By.xpath("//tr[3]/td[4]/div")).click();
+   	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
+   }
+
+   catch (Exception e)
+   {
+   	System.out.println("Invalid date or date is disabled or element not found");
+   	driver.close();
+   }
+          
+          
+          
    	 // Visit sub status dropdown
           try {
       		driver.findElement(By.xpath("//div[8]/mat-expansion-panel/div/div/div[2]/app-select/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
@@ -646,8 +695,8 @@ driver.close();
 
      	 
       	try {
-            WebElement select1 = driver.findElement(By.xpath("//span[contains(.,'Auto Restart')]"));
-            WebElement select2 = driver.findElement(By.xpath("//span[contains(.,'Tripping')]"));
+            WebElement select1 = driver.findElement(By.xpath("//mat-option[2]/span"));
+            WebElement select2 = driver.findElement(By.xpath("//mat-option[3]/span"));
 
             Actions action = new Actions(driver);
             action.keyDown(Keys.CONTROL).click(select1).click(select2).build().perform();	
@@ -703,8 +752,8 @@ driver.close();
 
     	 
      	try {
-           WebElement select7 = driver.findElement(By.xpath("//span[contains(.,'SMPS faulty')]"));
-           WebElement select8 = driver.findElement(By.xpath("//span[contains(.,'Capacitor Faulty')]"));
+           WebElement select7 = driver.findElement(By.xpath("//mat-option[1]/span"));
+           WebElement select8 = driver.findElement(By.xpath("//mat-option[3]/span"));
 
            Actions action = new Actions(driver);
            action.keyDown(Keys.CONTROL).click(select7).click(select8).build().perform();	
@@ -741,8 +790,8 @@ driver.close();
     		
     		
     		
-           driver.findElement(By.cssSelector("#mat-option-40 > .mat-option-text")).click();
-          driver.findElement(By.cssSelector("#mat-option-41 > .mat-option-text")).click();
+           driver.findElement(By.xpath("//mat-option[2]/span")).click();
+          driver.findElement(By.xpath("//mat-option[5]/span")).click();
                                                	
           Thread.sleep(5000);
     	}
@@ -1702,7 +1751,7 @@ driver.close();
 
  // for Repair Completion Check Box
  	 try {
-         	driver.findElement(By.xpath("//mat-checkbox/label/div")).click();
+         	driver.findElement(By.xpath("//mat-checkbox[@id='mat-checkbox-1']/label/div")).click();
          	Thread.sleep(5000);
          }
 
@@ -1768,7 +1817,7 @@ driver.close();
     	driver.close();
     }
     try {
-    	driver.findElement(By.xpath("//td[5]/div")).click();
+    	driver.findElement(By.xpath("//tr[3]/td[4]/div")).click();
     	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
     }
 
@@ -1777,7 +1826,80 @@ driver.close();
     	System.out.println("Invalid date or date is disabled or element not found");
     	driver.close();
     }
+    
+//invaid photo
+	try {
+   		
+   		
+   		try {
+   		WebElement element = driver.findElement(By.xpath("//app-file[6]/div/button"));
 
+   		Actions actions = new Actions(driver);
+
+   		actions.moveToElement(element);
+
+   		actions.perform();
+   		}
+   		catch (Exception e)
+       	{
+       		System.out.println("Scroll upto Defect Upload Button is not working");
+       		driver.close();
+       	}
+       	
+   		
+   		
+   		driver.findElement(By.xpath("//app-file[6]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Job Sheet");
+   		driver.close();
+   	}
+   	//Pop Up Operations form invalid file upload in Job Sheet
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+   	
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+         Thread.sleep(5000);
+         }
+
+      	catch (Exception e)
+      	{
+      		System.out.println("Job Sheet Photo could not be uploaded");
+   	}
+         WebDriverWait wait = new WebDriverWait(driver, 120);
+         String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+ 		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+ 		
+ 		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+          {
+         	 
+         	 System.out.println(Successmsg);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+          }
+ 		  else {
+ 			  System.out.println("Test Failed as invalid file got uploaded in Job Sheet");
+
+ 		  }
+
+         
+         
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Job Sheet upload pop up in Product Number");
+   		//driver.close();
+   	
+   	
+   	}
+
+    
+    
+/*
   //Pop Up Operations form valid file one upload in Repair Product Photos
    	try {
    		driver.findElement(By.xpath("//app-file[6]/div/button")).click();
@@ -1812,9 +1934,46 @@ driver.close();
    	
    	
    	}
-
+*/
    	
    	//Pop Up Operations form valid file two upload in Repair Product Photos
+   	 try {
+    		driver.findElement(By.xpath("//app-file[6]/div/button")).click();
+    	}
+
+    	catch (Exception e)
+    	{
+    		System.out.println("Repair Product Photos  Upload Button is disabled or not Present");
+    		driver.close();
+
+    	}
+    	
+    	try {
+    		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+            driver.switchTo().activeElement();
+            Thread.sleep(5000);
+    	// first photo in Repair Product Photos
+          try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+          Thread.sleep(5000);
+            String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+            System.out.println("file path after upload is: "+ a);
+  			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+          }
+       	catch (Exception e)
+       	{
+       		System.out.println("2nd Photo could not be uploaded Repair Product Photos");
+    	} 
+    	}
+    	catch (Exception e)
+    	{
+    		System.out.println("Could not switch to Repair Product Photos form upload pop up");
+    		//driver.close();
+    	}
+    	
+    
+
+   	   	
+   	   	
    	try {
    		driver.findElement(By.xpath("//app-file[6]/div/button")).click();
    	}
@@ -1853,7 +2012,7 @@ driver.close();
  //Photo deletion operation in Repair Product Photos
    	
    	try {
-   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[5]/div/button[2]/span")).click();
+   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[6]/div/button[2]/span")).click();
    	}
 
    	catch (Exception e)
@@ -1943,9 +2102,83 @@ driver.close();
   		driver.close();
 
   	}
+   	
+   	// invalid final job sheet
+	try {
+   		
+   		
+   		try {
+   		WebElement element = driver.findElement(By.xpath("//app-file[7]/div/button"));
+
+   		Actions actions = new Actions(driver);
+
+   		actions.moveToElement(element);
+
+   		actions.perform();
+   		}
+   		catch (Exception e)
+       	{
+       		System.out.println("Scroll upto Defect Upload Button is not working");
+       		driver.close();
+       	}
+       	
+   		
+   		
+   		driver.findElement(By.xpath("//app-file[7]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Job Sheet");
+   		driver.close();
+   	}
+   	//Pop Up Operations form invalid file upload in Job Sheet
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+   	
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+         Thread.sleep(5000);
+         }
+
+      	catch (Exception e)
+      	{
+      		System.out.println("Job Sheet Photo could not be uploaded");
+   	}
+         WebDriverWait wait = new WebDriverWait(driver, 120);
+         String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+ 		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+ 		
+ 		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+          {
+         	 
+         	 System.out.println(Successmsg);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+          }
+ 		  else {
+ 			  System.out.println("Test Failed as invalid file got uploaded in Job Sheet");
+
+ 		  }
+
+         
+         
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Job Sheet upload pop up in Product Number");
+   		//driver.close();
+   	
+   	
+   	}
+
+   	
+   	
+   	
 
   //Pop Up Operations form valid file one upload in Final Job Sheet
-   	try {
+ /*  	try {
    		driver.findElement(By.xpath("//app-file[7]/div/button")).click();
    	}
 
@@ -1979,7 +2212,7 @@ driver.close();
    	
    	}
 
-   	
+   	*/
    	//Pop Up Operations form valid file two upload in Final Job Sheet
    	try {
    		driver.findElement(By.xpath("//app-file[7]/div/button")).click();
@@ -1991,6 +2224,39 @@ driver.close();
    		driver.close();
 
    	}
+   	try {
+  		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+          driver.switchTo().activeElement();
+          Thread.sleep(5000);
+  	// first photo in Final Job Sheet
+        try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+        Thread.sleep(5000);
+          String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+          System.out.println("file path after upload is: "+ a);
+			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+        }
+     	catch (Exception e)
+     	{
+     		System.out.println("2nd Photo could not be uploaded Final Job Sheet");
+  	} 
+  	}
+  	catch (Exception e)
+  	{
+  		System.out.println("Could not switch to Final Job Sheet form upload pop up");
+  		//driver.close();
+  	}
+  	
+   	try {
+   		driver.findElement(By.xpath("//app-file[7]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Final Job Sheet  Upload Button is disabled or not Present");
+   		driver.close();
+
+   	}
+   	
    	
    	try {
    		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
@@ -2019,7 +2285,7 @@ driver.close();
  //Photo deletion operation in Final Job Sheet
    	
    	try {
-   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[5]/div/button[2]/span")).click();
+   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[7]/div/button[2]/span")).click();
    	}
 
    	catch (Exception e)
@@ -2029,7 +2295,7 @@ driver.close();
 
    	}
    	try {
-   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   		driver.findElement(By.xpath("//div[3]/button/span/mat-icon")).click();
    	}
 
    	catch (Exception e)
@@ -2052,7 +2318,7 @@ driver.close();
 
    	}
    	try {
-   		driver.findElement(By.xpath("//mat-icon[contains(.,'delete')]")).click();
+   		driver.findElement(By.xpath("//div[3]/button/span/mat-icon")).click();
    	}
 
    	catch (Exception e)
@@ -2079,7 +2345,7 @@ driver.close();
    	}
  //Photo upload cancel button in Final Job Sheet
    	try {
-   		driver.findElement(By.xpath("//app-file[7]/div/button")).click();
+   		driver.findElement(By.xpath("//app-file[8]/div/button")).click();
    	}
 
    	catch (Exception e)
@@ -2109,8 +2375,84 @@ driver.close();
   		driver.close();
 
   	}
+//invalid defective photo
+	try {
+   		
+   		
+   		try {
+   		WebElement element = driver.findElement(By.xpath("//app-file[5]/div/button"));
 
+   		Actions actions = new Actions(driver);
+
+   		actions.moveToElement(element);
+
+   		actions.perform();
+   		}
+   		catch (Exception e)
+       	{
+       		System.out.println("Scroll upto Defect Upload Button is not working");
+       		driver.close();
+       	}
+       	
+   		
+   		
+   		driver.findElement(By.xpath("//app-file[8]/div/button")).click();
+   	}
+
+   	catch (Exception e)
+   	{
+   		System.out.println("Defect Upload Button is disabled or not Present in Job Sheet");
+   		driver.close();
+   	}
+   	//Pop Up Operations form invalid file upload in Job Sheet
+   	try {
+   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+           driver.switchTo().activeElement();
+   	
+         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Desktop\\invalid.exe");
+         Thread.sleep(5000);
+         }
+
+      	catch (Exception e)
+      	{
+      		System.out.println("Job Sheet Photo could not be uploaded");
+   	}
+         WebDriverWait wait = new WebDriverWait(driver, 120);
+         String Successmsg = driver.findElement(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")).getText();
+ 		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Please upload a file with valid format.')]")));
+ 		
+ 		 if (Successmsg.contentEquals("Please upload a file with valid format."))
+          {
+         	 
+         	 System.out.println(Successmsg);
+
+ 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+
+          }
+ 		  else {
+ 			  System.out.println("Test Failed as invalid file got uploaded in Job Sheet");
+
+ 		  }
+
+         
+         
+   	}
+   	catch (Exception e)
+   	{
+   		System.out.println("Could not switch to Job Sheet upload pop up in Product Number");
+   		//driver.close();
+   	
+   	
+   	}
+
+   	
+   	
   //Pop Up Operations form valid file one upload in Defective Part Photos
+   	
+   /*	
+   	
+   	
+   	
    	try {
    		driver.findElement(By.xpath("//app-file[8]/div/button")).click();
    	}
@@ -2145,8 +2487,43 @@ driver.close();
    	
    	}
 
-   	
+   	*/
    	//Pop Up Operations form valid file two upload in Defective Part Photos
+   	   	try {
+   	   		driver.findElement(By.xpath("//app-file[8]/div/button")).click();
+   	   	}
+
+   	   	catch (Exception e)
+   	   	{
+   	   		System.out.println("Defective Part Photos  Upload Button is disabled or not Present");
+   	   		driver.close();
+
+   	   	}
+   	   	
+   	   	try {
+   	   		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+   	           driver.switchTo().activeElement();
+   	           Thread.sleep(5000);
+   	   	// First photo in Defective Part Photos
+   	         try {  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\Users\\TECHFOUR\\Downloads\\dummy.pdf");
+   	         Thread.sleep(5000);
+   	           String a= driver.findElement(By.xpath("//h4/a/span")).getText();
+   	           System.out.println("file path after upload is: "+ a);
+   	 			driver.findElement(By.xpath("//button[contains(.,'Finish')]")).click();
+   	         }
+   	      	catch (Exception e)
+   	      	{
+   	      		System.out.println("2nd Photo could not be uploaded Defective Part Photos");
+   	   	} 
+   	   	}
+   	   	catch (Exception e)
+   	   	{
+   	   		System.out.println("Could not switch to Defective Part Photos form upload pop up");
+   	   		//driver.close();
+   	   	}
+   	   	
+   	   	
+   	   	
    	try {
    		driver.findElement(By.xpath("//app-file[8]/div/button")).click();
    	}
@@ -2185,7 +2562,7 @@ driver.close();
  //Photo deletion operation in Defective Part Photos
    	
    	try {
-   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[5]/div/button[2]/span")).click();
+   		driver.findElement(By.xpath("//div[@id='repair_details___fields']/app-file[8]/div/button[2]/span")).click();
    	}
 
    	catch (Exception e)
@@ -2288,7 +2665,27 @@ driver.close();
       	driver.close();
       }
 
-    
+// For success Message
+    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+    String TitleW= driver.switchTo().activeElement().getText();
+	System.out.println("Model Box title is:" +TitleW);
+WebDriverWait wait = new WebDriverWait(driver, 120);
+String Successmsg = driver.findElement(By.xpath("//p[contains(.,'Inspection has been created successfully.')]")).getText();
+ wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(.,'Inspection has been created successfully.')]")));
+driver.findElement(By.xpath("//button[@id='modal-action-button']")).click();
+                             
+ if (Successmsg.contentEquals("Inspection has been created successfully."))
+  {
+ 	 
+ 	 System.out.println(Successmsg);
+
+  }
+  else {
+	  System.out.println("Inspection success message is incorrect");
+
+  }
+ 
+driver.close();
     
  }
 }

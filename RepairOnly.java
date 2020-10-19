@@ -11,7 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 
@@ -24,32 +25,61 @@ public class RepairOnly {
  
  
  @Test (priority=1)
- public void BlankInspection() {
+ public void BlankInspection() throws InterruptedException {
  	 System.setProperty("webdriver.chrome.driver", driverPath);
  	   driver = new ChromeDriver();
  	   driver.manage().window().maximize();
+ 	  driver.manage().deleteAllCookies();
  	   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
  	 
- driver.get("http://devreassure.innov.co.in/complaints/view/664");
+ driver.get("https://devreassure.innov.co.in/complaints/view/3");
  driver.findElement(By.xpath("//input[@type='text']")).click();
  driver.findElement(By.xpath("//input[@type='text']")).clear();
- driver.findElement(By.xpath("//input[@type='text']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='text']")).sendKeys("IND068");
  driver.findElement(By.xpath("//input[@type='password']")).clear();
- driver.findElement(By.xpath("//input[@type='password']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Test@123456");
  driver.findElement(By.xpath("//button[@type='submit']")).click();
 
           driver.findElement(By.xpath("//span[contains(.,'Add Inspection')]")).click();
-          try {
-          	driver.findElement(By.xpath("//div[2]/div/button")).click();
-          }
+               Thread.sleep(5000); 
+               // for Repair Completion Check Box
+            	 try {
+                    	driver.findElement(By.xpath("//mat-checkbox/label/div")).click();
+                    	Thread.sleep(5000);
+                    }
 
-          catch (Exception e)
-          {
-          	System.out.println("Test Failed:Submit button is disabled or not present");
-          	driver.close();
-          }
-          
-          
+                    catch (Exception e)
+                    {
+                    	System.out.println("Test Failed:Repair Completion Check Box  is disabled or not present");
+                    	driver.close();	
+                    }
+            	 
+            	 try {
+            		JavascriptExecutor js = ((JavascriptExecutor) driver);
+            		js.executeScript("window.scrollTo(0,1798.75)");
+            		Thread.sleep(5000);
+            	 }
+            	 
+            	catch (Exception e)
+               {
+               	System.out.println("Test Failed:Scroll down failed");
+               	driver.close();	
+               }
+
+            	// for submit button
+             	
+               	 try {
+               		 
+                      	driver.findElement(By.xpath("//div[2]/div/button")).click();
+                      }
+
+                      catch (Exception e)
+                      {
+                      	System.out.println("Test Failed:Submit button is disabled or not present");
+                      	driver.close();
+                      }
+            
+
           
        // Server side Validation check for error/blank field   
           try {
@@ -75,118 +105,9 @@ public class RepairOnly {
           	System.out.println("Test Failed:Close button is disabled or not present");
           	driver.close();
           }
-
-        //Validation check for visit sub status field
-          try {
-         	 Thread.sleep(5000);
-          	driver.findElement(By.xpath("//mat-error[contains(.,'Visit Sub Status Required')]")).click();
-          	 try {
-               	String VisitMessage=driver.findElement(By.xpath("//mat-error[contains(.,'Visit Sub Status Required')]")).getText();
-               	if (VisitMessage.contentEquals("Visit Sub Status Required")) {
-               		System.out.println("Message for leaving Visit Sub status blank is :"+VisitMessage);
-               		}
-               	else {
-               		System.out.println("Test Failed: Wrong error Message");
-               	}
-               }
-
-               catch (Exception e)
-               {
-               	System.out.println("Test Failed:Error Message for visit sub status element not found");
-               	driver.close();
-               }
-          }
-
-          catch (Exception e)
-          {
-          	System.out.println("Test Failed:No error Message found");
-          	driver.close();
-          }
-          
-          try {
-        		driver.findElement(By.xpath("//div[8]/mat-expansion-panel/div/div/div[2]/app-select/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
-        	}
-
-        	catch (Exception e)
-        	{
-        		System.out.println("Visit Sub status dropdown is disabled or not present");
-        		driver.close();
-        	}
-        	try {
-        		driver.findElement(By.xpath("//mat-option[2]/span")).click();
-        		Thread.sleep(5000);
-        	}
-
-        	catch (Exception e)
-        	{
-        		System.out.println("Visit Sub status dropdown value is disabled or not present");
-        		driver.close();
-        	}
-        	
-         	               
-               
-        	// for submit button
-        	
-       	 try {
-       		 
-              	driver.findElement(By.xpath("//div[2]/div/button")).click();
-              }
-
-              catch (Exception e)
-              {
-              	System.out.println("Test Failed:Submit button is disabled or not present");
-              	driver.close();
-              }
-    
-            // Server side Validation check for error/blank field   
-               try {
-              	 Thread.sleep(2000);
-               	String Msg= driver.findElement(By.xpath("//span[contains(.,'Error : Please fill all required field.')]")).getText();
-               	System.out.println("Pop-up Error message is :"+ Msg);
-               	
-               }
-
-               catch (Exception e)
-               {
-               	System.out.println("Test Failed:Pop-upError Message not found");
-               	driver.close();
-               }
-
-              
-               try {
-               	driver.findElement(By.xpath("//span[contains(.,'Close')]")).click();
-               }
-
-               catch (Exception e)
-               {
-               	System.out.println("Test Failed:Close button is disabled or not present");
-               	driver.close();
-               }
-                           
-            // for Repair Completion Check Box
-          	 try {
-                  	driver.findElement(By.xpath("//mat-checkbox/label/div")).click();
-                  	Thread.sleep(5000);
-                  }
-
-                  catch (Exception e)
-                  {
-                  	System.out.println("Test Failed:Repair Completion Check Box  is disabled or not present");
-                  	driver.close();	
-                  }
-          	 
-          	 try {
-          		JavascriptExecutor js = ((JavascriptExecutor) driver);
-          		js.executeScript("window.scrollTo(0,1798.75)");
-          		Thread.sleep(5000);
-          	 }
-          	 
-          	catch (Exception e)
-             {
-             	System.out.println("Test Failed:Scroll down failed");
-             	driver.close();	
-             }
-     	 
+  
+        	                                
+                	 
           	 //Validation check for Resolution of Issue  field
              try {
             	 Thread.sleep(5000);
@@ -224,7 +145,7 @@ public class RepairOnly {
              	driver.close();
              }
              try {
-             	driver.findElement(By.xpath("//tr[3]/td[3]/div")).click();
+             	driver.findElement(By.xpath("//tr[3]/td[4]/div")).click();
              	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
              }
 
@@ -326,14 +247,15 @@ driver.close();
  	 System.setProperty("webdriver.chrome.driver", driverPath);
  	   driver = new ChromeDriver();
  	   driver.manage().window().maximize();
+ 	  driver.manage().deleteAllCookies();
  	   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
  	 
- driver.get("http://devreassure.innov.co.in/complaints/view/664");
+ driver.get("https://devreassure.innov.co.in/complaints/view/3");
  driver.findElement(By.xpath("//input[@type='text']")).click();
  driver.findElement(By.xpath("//input[@type='text']")).clear();
- driver.findElement(By.xpath("//input[@type='text']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='text']")).sendKeys("IND068");
  driver.findElement(By.xpath("//input[@type='password']")).clear();
- driver.findElement(By.xpath("//input[@type='password']")).sendKeys("san001");
+ driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Test@123456");
  driver.findElement(By.xpath("//button[@type='submit']")).click();
 
           
@@ -360,28 +282,7 @@ driver.close();
            	System.out.println("Test Failed:Scroll down failed");
            	driver.close();	
            }
-   	 // Visit sub status dropdown
-          try {
-      		driver.findElement(By.xpath("//div[8]/mat-expansion-panel/div/div/div[2]/app-select/mat-form-field/div/div/div[3]/mat-select/div/div[2]/div")).click();
-      	}
-
-      	catch (Exception e)
-      	{
-      		System.out.println("Visit Sub status dropdown is disabled or not present");
-      		driver.close();
-      	}
-      	try {
-      		driver.findElement(By.xpath("//mat-option[2]/span")).click();
-      		Thread.sleep(5000);
-      	}
-
-      	catch (Exception e)
-      	{
-      		System.out.println("Visit Sub status dropdown value is disabled or not present");
-      		driver.close();
-      	}
-      
- // for Repair Completion Check Box
+   	 // for Repair Completion Check Box
  	 try {
          	driver.findElement(By.xpath("//mat-checkbox/label/div")).click();
          	Thread.sleep(5000);
@@ -449,7 +350,7 @@ driver.close();
     	driver.close();
     }
     try {
-    	driver.findElement(By.xpath("//td[5]/div")).click();
+    	driver.findElement(By.xpath("//tr[4]/td[2]/div")).click();
     	driver.findElement(By.xpath("//mat-expansion-panel/div/div/div[2]/div")).click();
     }
 
@@ -1074,7 +975,28 @@ driver.close();
       	driver.close();
       }
 
-    
+ // For success Message
+    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+    String TitleW= driver.switchTo().activeElement().getText();
+	System.out.println("Model Box title is:" +TitleW);
+WebDriverWait wait = new WebDriverWait(driver, 120);
+String Successmsg = driver.findElement(By.xpath("//p[contains(.,'Inspection has been updated successfully.')]")).getText();
+ wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(.,'Inspection has been updated successfully.')]")));
+driver.findElement(By.xpath("//button[@id='modal-action-button']")).click();
+                             
+ if (Successmsg.contentEquals("Inspection has been updated successfully."))
+  {
+ 	 
+ 	 System.out.println(Successmsg);
+
+  }
+  else {
+	  System.out.println("Inspection success message is incorrect");
+
+  }
+ 
+driver.close();
+
     
  }
 }
